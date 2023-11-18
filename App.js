@@ -1,20 +1,18 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from "@react-navigation/native-stack"
+import Login from './screens/Login';
+import Signup from './screens/Signup';
+import Welcome from './screens/Welcome';
 
+const stack = createNativeStackNavigator()
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>final project 3 Hacktiv8</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <stack.Navigator initialRouteName='Welcome'>
+        <stack.Screen name='Welcome' component={Welcome} />
+        <stack.Screen name='Login' component={Login} />
+        <stack.Screen name='Signup' component={Signup} />
+      </stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
