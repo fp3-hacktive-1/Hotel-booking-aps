@@ -3,10 +3,10 @@ import React, { useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const BookingList = () => {
-	const getBookingList = () => {
+	const getBookingList = async () => {
 		try {
-			const bookingListById = AsyncStorage.getItem("bookinglist");
-			console.log(bookingListById);
+			const bookingListById = await AsyncStorage.getItem("BookingHistory");
+			console.log(JSON.parse(bookingListById));
 		} catch (error) {
 			console.log(error);
 		}

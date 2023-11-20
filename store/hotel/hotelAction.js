@@ -1,19 +1,26 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import apiInstance from "../../services/api";
 
+const currentDate = new Date();
+const nextMonthDate = new Date(
+	currentDate.setMonth(currentDate.getMonth() + 1)
+);
+
+const nextMonth = nextMonthDate.toISOString().split("T")[0];
+
 export const fetchHotels = createAsyncThunk(
 	"hotel/fetchAll",
-	async (data, { rejectWithValue }) => {
+	async ({ regionId }, { rejectWithValue }) => {
 		try {
 			const response = await apiInstance.get("/hotels/search", {
 				params: {
-					region_id: "159522",
+					region_id: regionId,
 					locale: "en_GB",
-					checkin_date: "2023-11-18",
+					checkin_date: new Date().toISOString().split("T")[0],
 					sort_order: "REVIEW",
 					adults_number: "1",
 					domain: "ID",
-					checkout_date: "2023-11-24",
+					checkout_date: nextMonth,
 					children_ages: "4,0,15",
 					lodging_type: "HOTEL,HOSTEL,APART_HOTEL",
 					price_min: "10",
