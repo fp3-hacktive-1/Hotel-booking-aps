@@ -64,7 +64,7 @@ const Welcome = ({ navigation }) => {
 							}}>
 							Already have an account ?
 						</Text>
-						<Pressable onPress={() => navigation.navigate("BookingHistory")}>
+						<Pressable onPress={() => navigation.navigate("Login")}>
 							<Text
 								style={{
 									fontSize: 16,

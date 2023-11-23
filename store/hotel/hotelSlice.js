@@ -5,6 +5,7 @@ const initialState = {
 	isLoading: false,
 	error: null,
 	bookingData: [],
+	wishList: [],
 };
 
 const hotelSlice = createSlice({

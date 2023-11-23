@@ -18,6 +18,10 @@ import { signIn } from "../store/auth/authAction";
 const Login = ({ navigation }) => {
 	const [isPasswordShown, setIsPasswordShown] = useState(false);
 	const [isChecked, setIsChecked] = useState(false);
+	const [loginPayload, setLoginPayload] = useState({
+		email: "",
+		password: "",
+	});
 
 	const dispatch = useDispatch();
 	const { isLoading } = useSelector((state) => state.auth);
@@ -25,8 +29,8 @@ const Login = ({ navigation }) => {
 	const handleLogin = async () => {
 		dispatch(
 			signIn({
-				email: "developer@gmail.com",
-				password: 123456,
+				email: loginPayload.email,
+				password: loginPayload.password,
 			})
 		);
 	};
@@ -76,6 +80,12 @@ const Login = ({ navigation }) => {
 							paddingLeft: 22,
 						}}>
 						<TextInput
+							onChangeText={(event) =>
+								setLoginPayload((prev) => ({
+									...prev,
+									email: event,
+								}))
+							}
 							placeholder="Enter your email address"
 							placeholderTextColor={COLORS.black}
 							keyboardType="email-address"
@@ -108,6 +118,12 @@ const Login = ({ navigation }) => {
 							paddingLeft: 22,
 						}}>
 						<TextInput
+							onChangeText={(event) =>
+								setLoginPayload((prev) => ({
+									...prev,
+									password: event,
+								}))
+							}
 							placeholder="Enter your password"
 							placeholderTextColor={COLORS.black}
 							secureTextEntry={isPasswordShown}

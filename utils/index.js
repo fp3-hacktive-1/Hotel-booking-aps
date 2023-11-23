@@ -11,3 +11,23 @@ export const createToken = () => {
 
 	return token;
 };
+
+export const calculateDaysBetweenDates = (checkin, checkout) => {
+	console.log(checkin);
+	const checkinDate = checkin;
+	const checkoutDate = checkout;
+
+	const timeDifference = checkoutDate - checkinDate;
+
+	const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+
+	return daysDifference;
+};
+
+export const idrFormat = (num) =>
+	num.toLocaleString("id-ID", {
+		style: "currency",
+		currency: "IDR",
+		minimumFractionDigits: 2,
+		maximumFractionDigits: 2,
+	});
