@@ -25,7 +25,7 @@ export default function App({ navigation }) {
 	const { isLoading } = useSelector((state) => state.hotel);
 	const onSearching = (event) => {
 		const _resultSearch = allHotel.filter((hotel) =>
-			hotel.name.toLocaleLowerCase().includes(event.toLocaleLowerCase())
+			hotel.name?.toLocaleLowerCase().includes(event.toLocaleLowerCase())
 		);
 		setSearchResult(_resultSearch);
 		setIsSearching(true);
@@ -39,24 +39,31 @@ export default function App({ navigation }) {
 		const [soloData, baliData, jakartaData] = await Promise.all([
 			dispatch(
 				fetchHotels({
+					regionId: "500660",
+				})
+			),
+			dispatch(
+				fetchHotels({
 					regionId: "602651",
 				})
 			),
-			// dispatch(
-			// 	fetchHotels({
-			// 		regionId: "602651",
-			// 	})
-			// ),
-			// dispatch(
-			// 	fetchHotels({
-			// 		regionId: "1704",
-			// 	})
-			// ),
+			dispatch(
+				fetchHotels({
+					regionId: "1704",
+				})
+			),
 		]);
+		console.log(soloData.payload.properties);
+		console.log(jakartaData.payload.properties);
+		console.log(baliData.payload.properties);
 		setSoloHotel(soloData.payload.properties);
-		// setBaliHotel(baliData.payload.properties);
-		// setJakartaHotel(jakartaData.payload.properties);
-		setAllHotel([...soloData.payload.properties]);
+		setBaliHotel(baliData.payload.properties);
+		setJakartaHotel(jakartaData.payload.properties);
+		setAllHotel([
+			...soloData.payload.properties,
+			...jakartaData.payload.properties,
+			...baliData.payload.properties,
+		]);
 	};
 
 	useEffect(() => {
@@ -66,6 +73,7 @@ export default function App({ navigation }) {
 	return (
 		<View
 			style={{
+				marginTop: 24,
 				backgroundColor: "#F5FAFE",
 				flex: 1,
 			}}>
@@ -142,7 +150,7 @@ export default function App({ navigation }) {
 									fontSize: 20,
 									fontWeight: "700",
 								}}>
-								Recommended Hotels
+								Hotel In Solo
 							</Text>
 							<FlatList
 								style={{ marginTop: 24 }}
@@ -165,10 +173,10 @@ export default function App({ navigation }) {
 									fontWeight: "700",
 									marginTop: 26,
 								}}>
-								Hotel In Bali
+								Hotel In Jakarta
 							</Text>
-							{/* <FlatList
-								data={baliHotel}
+							<FlatList
+								data={jakartaHotel}
 								style={{ marginTop: 24 }}
 								horizontal
 								ItemSeparatorComponent={<View style={{ width: 17 }}></View>}
@@ -180,7 +188,7 @@ export default function App({ navigation }) {
 									/>
 								)}
 								keyExtractor={(item) => item.id}
-							/> */}
+							/>
 							<Text
 								style={{
 									color: "#007EF2",
@@ -188,9 +196,9 @@ export default function App({ navigation }) {
 									fontWeight: "700",
 									marginTop: 26,
 								}}>
-								Hotel In Jakarta
+								Hotel In Bali
 							</Text>
-							{/* <FlatList
+							<FlatList
 								data={baliHotel}
 								style={{ marginTop: 24 }}
 								horizontal
@@ -203,7 +211,7 @@ export default function App({ navigation }) {
 									/>
 								)}
 								keyExtractor={(item) => item.id}
-							/> */}
+							/>
 						</View>
 					)}
 				</ScrollView>

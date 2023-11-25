@@ -40,13 +40,12 @@ const Login = ({ navigation }) => {
 			})
 		)
 			.then((res) => {
-				console.log(res);
 				if (res.meta.requestStatus !== "fulfilled") {
 					Alert.alert("Email or Password Wrong");
 					return;
 				}
 
-				navigation.navigate("Home");
+				navigation.replace("Home");
 			})
 			.catch(() => {
 				Alert.alert("Email or Password Wrong");
@@ -70,7 +69,7 @@ const Login = ({ navigation }) => {
 							marginVertical: 12,
 							color: COLORS.black,
 						}}>
-						Hi Welcome Back ! 👋 {isAuthenticated ? "y" : "n"}
+						Hi Welcome Back ! 👋
 					</Text>
 
 					<Text
@@ -197,111 +196,6 @@ const Login = ({ navigation }) => {
 					}}
 					onPress={handleLogin}
 				/>
-
-				<View
-					style={{
-						flexDirection: "row",
-						alignItems: "center",
-						marginVertical: 20,
-					}}>
-					<View
-						style={{
-							flex: 1,
-							height: 1,
-							backgroundColor: COLORS.grey,
-							marginHorizontal: 10,
-						}}
-					/>
-					<Text style={{ fontSize: 14 }}>Or Login with</Text>
-					<View
-						style={{
-							flex: 1,
-							height: 1,
-							backgroundColor: COLORS.grey,
-							marginHorizontal: 10,
-						}}
-					/>
-				</View>
-
-				<View
-					style={{
-						flexDirection: "row",
-						justifyContent: "center",
-					}}>
-					<TouchableOpacity
-						onPress={() => dispatch(signOut())}
-						style={{
-							flex: 1,
-							alignItems: "center",
-							justifyContent: "center",
-							flexDirection: "row",
-							height: 52,
-							borderWidth: 1,
-							borderColor: COLORS.grey,
-							marginRight: 4,
-							borderRadius: 10,
-						}}>
-						<Image
-							source={require("../assets/facebook.png")}
-							style={{
-								height: 36,
-								width: 36,
-								marginRight: 8,
-							}}
-							resizeMode="contain"
-						/>
-
-						<Text>Facebook</Text>
-					</TouchableOpacity>
-
-					<TouchableOpacity
-						onPress={() => console.log("Pressed")}
-						style={{
-							flex: 1,
-							alignItems: "center",
-							justifyContent: "center",
-							flexDirection: "row",
-							height: 52,
-							borderWidth: 1,
-							borderColor: COLORS.grey,
-							marginRight: 4,
-							borderRadius: 10,
-						}}>
-						<Image
-							source={require("../assets/google.png")}
-							style={{
-								height: 36,
-								width: 36,
-								marginRight: 8,
-							}}
-							resizeMode="contain"
-						/>
-
-						<Text>Google</Text>
-					</TouchableOpacity>
-				</View>
-
-				<View
-					style={{
-						flexDirection: "row",
-						justifyContent: "center",
-						marginVertical: 22,
-					}}>
-					<Text style={{ fontSize: 16, color: COLORS.black }}>
-						Don't have an account ?{" "}
-					</Text>
-					<Pressable onPress={() => navigation.navigate("Signup")}>
-						<Text
-							style={{
-								fontSize: 16,
-								color: COLORS.primary,
-								fontWeight: "bold",
-								marginLeft: 6,
-							}}>
-							Register
-						</Text>
-					</Pressable>
-				</View>
 			</View>
 		</SafeAreaView>
 	);
