@@ -16,6 +16,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Ionicons } from "@expo/vector-icons";
 import MapView, { Marker } from "react-native-maps";
 import { idrFormat } from "../utils";
+import ProtectedRoute from "../components/protectedRoute";
 
 const WISHLIST_STORAGE_KEY = "wishlist";
 
@@ -65,13 +66,13 @@ export default function Detail({ route, navigation }) {
 	const [content, setContent] = useState(null);
 	const dispatch = useDispatch();
 	const { isLoading, bookingData } = useSelector((state) => state.hotel);
+	const { isAuthenticated, user } = useSelector((state) => state.auth);
 	const hotelId = route.params.hotel_id;
 	const [wishlistData, setWishlistData] = useState([]);
 
 	const isAlreadyWishlist = wishlistData.find(
 		(item) => item?.summary?.id === content?.summary?.id
 	);
-	const { user } = useSelector((state) => state.auth);
 
 	const handleGetDetailHotel = async () => {
 		await dispatch(fetchDetailHotel(hotelId))
@@ -143,6 +144,7 @@ export default function Detail({ route, navigation }) {
 								}}>
 								<Text style={{ fontSize: 16, fontWeight: "700", width: 300 }}>
 									{content?.summary.name}
+									{isAuthenticated ? "loged" : "not"}
 								</Text>
 								<Pressable
 									onPress={() => {
@@ -280,17 +282,22 @@ export default function Detail({ route, navigation }) {
 										borderRadius: 10,
 										backgroundColor: "#007EF2",
 									}}
-									onPress={() =>
-										navigation.navigate("WishList", {
-											hotel: {
-												id: content?.summary.id,
-												image: content?.propertyGallery.images[8].image.url,
-												address: content?.summary.location.address.addressLine,
-												price: route.params.price,
-												name: content?.summary.name,
-											},
-										})
-									}>
+									onPress={() => {
+										if (isAuthenticated) {
+											navigation.navigate("ChooseDate", {
+												hotel: {
+													id: content?.summary.id,
+													image: content?.propertyGallery.images[8].image.url,
+													address:
+														content?.summary.location.address.addressLine,
+													price: route.params.price,
+													name: content?.summary.name,
+												},
+											});
+										} else {
+											navigation.navigate("Login");
+										}
+									}}>
 									<Text
 										style={{
 											color: "#fff",

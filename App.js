@@ -18,7 +18,6 @@ import Search from "./screens/Search";
 import { store, persistor } from "./store";
 import Profile from "./screens/Profile";
 
-
 const Stack = createNativeStackNavigator();
 
 const Tab = createBottomTabNavigator();
@@ -30,7 +29,6 @@ function MainContainerTabs() {
 			<Tab.Screen name="Search" component={Search} />
 			<Tab.Screen name="BookingHistory" component={BookingHistory} />
 			<Tab.Screen name="Profile" component={Profile} />
-
 		</Tab.Navigator>
 	);
 }
