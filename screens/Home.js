@@ -25,7 +25,7 @@ export default function App({ navigation }) {
 	const { isLoading } = useSelector((state) => state.hotel);
 	const onSearching = (event) => {
 		const _resultSearch = allHotel.filter((hotel) =>
-			hotel.name.includes(event)
+			hotel.name.toLocaleLowerCase().includes(event.toLocaleLowerCase())
 		);
 		setSearchResult(_resultSearch);
 		setIsSearching(true);
@@ -53,7 +53,6 @@ export default function App({ navigation }) {
 			// 	})
 			// ),
 		]);
-		console.log(soloData.payload.properties);
 		setSoloHotel(soloData.payload.properties);
 		// setBaliHotel(baliData.payload.properties);
 		// setJakartaHotel(jakartaData.payload.properties);

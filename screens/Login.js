@@ -5,8 +5,9 @@ import {
 	Pressable,
 	TextInput,
 	TouchableOpacity,
+	Alert,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import COLORS from "../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
@@ -14,6 +15,7 @@ import Checkbox from "expo-checkbox";
 import Button from "../components/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "../store/auth/authAction";
+import { signOut } from "../store/auth/authSlice";
 
 const Login = ({ navigation }) => {
 	const [isPasswordShown, setIsPasswordShown] = useState(false);
@@ -24,16 +26,38 @@ const Login = ({ navigation }) => {
 	});
 
 	const dispatch = useDispatch();
-	const { isLoading } = useSelector((state) => state.auth);
+	const { isLoading, isAuthenticated } = useSelector((state) => state.auth);
 
 	const handleLogin = async () => {
-		dispatch(
+		if (loginPayload.email === "" && loginPayload.password === "") {
+			return Alert.alert("Please Fill The Field");
+		}
+
+		await dispatch(
 			signIn({
 				email: loginPayload.email,
 				password: loginPayload.password,
 			})
-		);
+		)
+			.then((res) => {
+				console.log(res);
+				if (res.meta.requestStatus !== "fulfilled") {
+					Alert.alert("Email or Password Wrong");
+					return;
+				}
+
+				navigation.navigate("Home");
+			})
+			.catch(() => {
+				Alert.alert("Email or Password Wrong");
+			});
 	};
+
+	useEffect(() => {
+		if (isAuthenticated) {
+			navigation.navigate("Home");
+		}
+	}, [navigation, isAuthenticated]);
 
 	return (
 		<SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
@@ -46,7 +70,7 @@ const Login = ({ navigation }) => {
 							marginVertical: 12,
 							color: COLORS.black,
 						}}>
-						Hi Welcome Back ! 👋
+						Hi Welcome Back ! 👋 {isAuthenticated ? "y" : "n"}
 					</Text>
 
 					<Text
@@ -86,6 +110,7 @@ const Login = ({ navigation }) => {
 									email: event,
 								}))
 							}
+							value={loginPayload.email}
 							placeholder="Enter your email address"
 							placeholderTextColor={COLORS.black}
 							keyboardType="email-address"
@@ -118,6 +143,7 @@ const Login = ({ navigation }) => {
 							paddingLeft: 22,
 						}}>
 						<TextInput
+							value={loginPayload.password}
 							onChangeText={(event) =>
 								setLoginPayload((prev) => ({
 									...prev,
@@ -203,7 +229,7 @@ const Login = ({ navigation }) => {
 						justifyContent: "center",
 					}}>
 					<TouchableOpacity
-						onPress={() => console.log("Pressed")}
+						onPress={() => dispatch(signOut())}
 						style={{
 							flex: 1,
 							alignItems: "center",

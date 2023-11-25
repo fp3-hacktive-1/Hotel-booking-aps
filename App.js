@@ -5,6 +5,7 @@ import Detail from "./screens/Detail";
 import BookingHistory from "./screens/BookingHistory";
 import ChooseDate from "./screens/ChooseDate";
 import BookingSummary from "./screens/BookingSummary";
+import BookingList from "./screens/BookingHistory";
 import WishList from "./screens/WishList";
 import { store, persistor } from "./store";
 import { Provider } from "react-redux";
@@ -33,9 +34,9 @@ export default function App() {
 						<stack.Screen name="Signup" component={Signup} />
 						<stack.Screen name="Detail" component={Detail} />
 						<stack.Screen name="Home" component={Home} />
-						<stack.Screen name="BookingHistory" component={BookingHistory} />
 						<stack.Screen name="ChooseDate" component={ChooseDate} />
 						<stack.Screen name="BookingSummary" component={BookingSummary} />
+						<stack.Screen name="BookingHistory" component={BookingList} />
 						<stack.Screen name="WishList" component={WishList} />
 					</stack.Navigator>
 				</NavigationContainer>
