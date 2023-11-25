@@ -8,8 +8,8 @@ const HotelCard = ({ hotel, navigation }) => {
 		<Pressable
 			onPress={() =>
 				navigation.navigate("Detail", {
-					hotel_id: hotel.id,
-					price: hotel.price.lead.amount,
+					hotel_id: hotel?.id,
+					price: hotel?.price.lead.amount,
 				})
 			}
 			style={{
@@ -27,7 +27,7 @@ const HotelCard = ({ hotel, navigation }) => {
 					borderWidth: 1,
 				}}
 				source={{
-					uri: hotel.propertyImage.image.url,
+					uri: hotel?.propertyImage.image.url,
 				}}
 			/>
 			<View
@@ -48,12 +48,12 @@ const HotelCard = ({ hotel, navigation }) => {
 						color: "#007EF2",
 						fontSize: 9,
 					}}>
-					{hotel.star}
+					{hotel?.star}
 				</Text>
 			</View>
 			<Text
 				style={{ fontSize: 14, fontWeight: "700", marginTop: 11, width: 180 }}>
-				{hotel.name}
+				{hotel?.name ? hotel.name : "Not Found"}
 			</Text>
 			<View
 				style={{
@@ -65,7 +65,7 @@ const HotelCard = ({ hotel, navigation }) => {
 				}}>
 				<Ionicons name="location-outline" />
 				<Text style={{ color: "#7F7F7F", fontSize: 10 }}>
-					{hotel.neighborhood.name}
+					{hotel?.neighborhood?.name ? hotel.neighborhood.name : "Not Found"}
 				</Text>
 			</View>
 			<Text
@@ -74,7 +74,7 @@ const HotelCard = ({ hotel, navigation }) => {
 					fontSize: 10,
 					fontWeight: "700",
 				}}>
-				{idrFormat(hotel.price.lead.amount)}
+				{idrFormat(hotel?.price.lead.amount)}
 				<Text
 					style={{
 						color: "#000000CF",

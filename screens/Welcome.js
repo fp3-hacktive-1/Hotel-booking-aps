@@ -1,10 +1,19 @@
 import { View, Text, Pressable, Image } from "react-native";
-import React from "react";
+import { useEffect } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import COLORS from "../constants/colors";
 import Button from "../components/Button";
+import { useSelector } from "react-redux";
 
 const Welcome = ({ navigation }) => {
+	const { isAuthenticated } = useSelector((state) => state.auth);
+
+	useEffect(() => {
+		if (isAuthenticated) {
+			navigation.replace("Home");
+		}
+	}, [navigation, isAuthenticated]);
+
 	return (
 		<LinearGradient
 			style={{

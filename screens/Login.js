@@ -40,13 +40,12 @@ const Login = ({ navigation }) => {
 			})
 		)
 			.then((res) => {
-				console.log(res);
 				if (res.meta.requestStatus !== "fulfilled") {
 					Alert.alert("Email or Password Wrong");
 					return;
 				}
 
-				navigation.navigate("Home");
+				navigation.replace("Home");
 			})
 			.catch(() => {
 				Alert.alert("Email or Password Wrong");
@@ -70,7 +69,7 @@ const Login = ({ navigation }) => {
 							marginVertical: 12,
 							color: COLORS.black,
 						}}>
-						Hi Welcome Back ! 👋 {isAuthenticated ? "y" : "n"}
+						Hi Welcome Back ! 👋
 					</Text>
 
 					<Text

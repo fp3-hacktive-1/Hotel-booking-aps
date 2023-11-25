@@ -16,7 +16,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Ionicons } from "@expo/vector-icons";
 import MapView, { Marker } from "react-native-maps";
 import { idrFormat } from "../utils";
-import ProtectedRoute from "../components/protectedRoute";
 
 const WISHLIST_STORAGE_KEY = "wishlist";
 
@@ -86,28 +85,29 @@ export default function Detail({ route, navigation }) {
 		//	await AsyncStorage.removeItem(WISHLIST_STORAGE_KEY);
 	};
 
-	const handleBookHotel = () => {
-		dispatch(
-			booking({
-				hotel: content,
-				checkInDate: "2023- 11-20",
-				checkOutDate: "2023-11-25",
-				user,
-			})
-		);
-	};
-
 	const handleAddWishList = () => {
 		saveWishlistToStorage({
 			...content,
 			price: route.params.price,
 		});
 		Alert.alert("success add to wish list");
+		setTimeout(() => {
+			navigation.replace("Detail", {
+				hotel_id: route.params.hotel_id,
+				price: route.params.price,
+			});
+		}, 1500);
 	};
 
 	const handleRemoveWishList = () => {
 		removeFromLocalStorage(content);
 		Alert.alert("success remove to wish list");
+		setTimeout(() => {
+			navigation.replace("Detail", {
+				hotel_id: route.params.hotel_id,
+				price: route.params.price,
+			});
+		}, 1500);
 	};
 
 	const handleGetWishlist = async () => {
@@ -213,6 +213,7 @@ export default function Detail({ route, navigation }) {
 										}}
 									/>
 								)}
+								key={({ item }) => item.summary.id}
 							/>
 							<Text style={styles.submenu_title}>Facilities</Text>
 							<View
