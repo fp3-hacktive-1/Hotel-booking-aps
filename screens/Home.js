@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
 import HotelCard from "../components/hotel-card";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function App({ navigation }) {
 	const dispatch = useDispatch();
@@ -53,9 +54,7 @@ export default function App({ navigation }) {
 				})
 			),
 		]);
-		console.log(soloData.payload.properties);
-		console.log(jakartaData.payload.properties);
-		console.log(baliData.payload.properties);
+
 		setSoloHotel(soloData.payload.properties);
 		setBaliHotel(baliData.payload.properties);
 		setJakartaHotel(jakartaData.payload.properties);
@@ -64,6 +63,9 @@ export default function App({ navigation }) {
 			...jakartaData.payload.properties,
 			...baliData.payload.properties,
 		]);
+
+		// clear booking history cuman pas pertama kali aja
+		// await AsyncStorage.removeItem("booking");
 	};
 
 	useEffect(() => {
