@@ -18,11 +18,17 @@ const BookingSummary = ({ route, navigation }) => {
 	const { user } = useSelector((state) => state.auth);
 	const [isLoading, setIsLoading] = useState(false);
 
+	const total = idrFormat(
+		Number(hotel.price) * booking.ammountDay +
+			Number(hotel.price * (10 / 100)) * booking.ammountDay
+	);
+
 	const handleSaveBooking = async () => {
 		await saveBooking({
 			hotel,
-			booking,
 			user,
+			booking,
+			total,
 		}).then(() => {
 			setIsLoading(true);
 			setTimeout(() => {

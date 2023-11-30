@@ -111,6 +111,10 @@ const BookingList = ({ navigation }) => {
 											{item.booking.room}
 										</Text>
 									</View>
+									<View>
+										<Text style={styles.bookingInfoTitle}>Total</Text>
+										<Text style={styles.bookingInfoValue}>{item.total}</Text>
+									</View>
 								</View>
 							</View>
 						)}
